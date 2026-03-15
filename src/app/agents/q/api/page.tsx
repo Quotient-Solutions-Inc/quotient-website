@@ -1,204 +1,168 @@
-'use client'
-
-import NavWithModal from '@/components/NavWithModal'
-import QTabBar from '@/components/QTabBar'
-import CodeBlock from '@/components/CodeBlock'
-import FAQ from '@/components/FAQ'
+import Nav from '@/components/Nav'
+import QNav from '@/components/QNav'
 import Footer from '@/components/Footer'
-import { useTheme } from '@/lib/ThemeContext'
+import FAQ from '@/components/FAQ'
+import Link from 'next/link'
 
 export default function ApiPage() {
-  const { theme } = useTheme()
-  const isB = theme === 'B'
-  const mono = isB ? 'font-mono' : 'font-mono'
-
   return (
     <div className="min-h-screen">
-      <NavWithModal />
-      <QTabBar />
+      <Nav />
+      <QNav />
 
       {/* Hero */}
-      <section className={`border-b ${
-        isB ? 'border-tb-border bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'border-border-thin py-20 px-10 max-md:px-6'
-      }`}>
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span className={`block text-[11px] uppercase mb-4 ${
-            isB ? 'font-mono tracking-[0.08em] text-gray-400' : 'font-mono tracking-eyebrow text-gray-400'
-          }`}>
-            For developers &amp; agents
+      <section className="bg-brand-black text-white py-12 px-10 max-md:px-6 max-md:py-8">
+        <div className="max-w-content mx-auto">
+          <span className="block font-mono text-[11px] uppercase tracking-eyebrow text-gray-500 mb-4">
+            FOR DEVELOPERS &amp; AGENTS
           </span>
-          {isB ? (
-            <h1 className="font-headline font-bold text-[clamp(2.5rem,6vw,5rem)] leading-[0.85] uppercase text-tb-dark tracking-[-0.03em] mb-5">
-              Geopolitical signal.<br />Built for agents.
-            </h1>
-          ) : (
-            <h1 className="font-headline text-[42px] max-md:text-[32px] font-normal leading-[1.15] tracking-[-0.02em] text-brand-black mb-5">
-              Geopolitical signal.<br />Built for agents.
-            </h1>
-          )}
-          <p className={`text-[15px] leading-relaxed max-w-[580px] mb-8 ${
-            isB ? 'font-headline text-gray-500' : 'text-gray-500'
-          }`}>
-            Agents reasoning about news and geopolitics need a verified signal layer. Q gives your pipeline structured, sourced, accountable intelligence on 600+ geopolitical prediction markets.
+          <h1 className="font-headline text-[36px] max-md:text-[28px] text-white tracking-[-0.02em] leading-[1.15] mb-3">
+            Geopolitical signal. Built for agents.
+          </h1>
+          <p className="text-[15px] leading-relaxed text-gray-400 max-w-[560px] mb-8">
+            A verified signal layer for autonomous pipelines. Structured output. Sourced evidence. Machine-readable by default.
           </p>
-          <div className="flex gap-3 mb-12">
-            <a
-              href="https://docs.quotient.social"
-              className={`text-xs uppercase px-5 py-2.5 transition-colors ${
-                isB
-                  ? 'bg-tb-dark text-white font-mono tracking-[0.08em] hover:bg-tb-cta-hover'
-                  : 'bg-brand-black text-white font-mono tracking-wide hover:bg-gray-800'
-              }`}
+          <div className="flex gap-3 mb-10">
+            <Link
+              href="#"
+              className="bg-brand-red-orange text-white px-5 py-2.5 text-sm font-medium hover:opacity-90"
             >
-              Start building
-            </a>
-            <a
+              Start building &rarr;
+            </Link>
+            <Link
               href="https://docs.quotient.social"
               target="_blank"
-              rel="noopener noreferrer"
-              className={`text-xs uppercase px-5 py-2.5 border transition-colors ${
-                isB
-                  ? 'text-gray-500 font-mono tracking-[0.08em] border-tb-border hover:border-tb-primary'
-                  : 'text-gray-500 font-mono tracking-wide border-border-thin hover:border-gray-400'
-              }`}
+              className="border border-gray-600 text-gray-300 px-5 py-2.5 text-sm font-medium hover:text-white hover:border-gray-400 transition-colors"
             >
-              Read the docs ↗
-            </a>
+              Read the docs &uarr;
+            </Link>
           </div>
 
-          <CodeBlock />
-        </div>
-      </section>
+          <div className="bg-[#111] border border-gray-800 rounded-sm p-6 overflow-x-auto">
+            <span className="block font-mono text-[10px] uppercase tracking-eyebrow text-gray-600 mb-3">
+              EXAMPLE REQUEST
+            </span>
+            <pre className="font-mono text-[13px] leading-relaxed text-gray-300 whitespace-pre">{`curl -H "Authorization: Bearer $API_KEY" \\
+  https://api.quotient.social/v1/signals/russia-ukraine-ceasefire
 
-      {/* Problem → Solution contrast */}
-      <section className={`border-b ${isB ? 'border-tb-border' : 'border-border-thin'}`}>
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <div className={`py-16 ${isB ? 'px-8 lg:px-tb-section-x' : 'px-10 max-md:px-6'}`}>
-            <h2 className={`font-semibold tracking-[-0.02em] mb-3 ${
-              isB
-                ? 'font-headline font-bold text-[clamp(2rem,4vw,3.5rem)] uppercase text-tb-dark leading-[0.9]'
-                : 'text-[28px] text-brand-black'
-            }`}>Most agents are reasoning on noise.</h2>
-            <p className={`text-[15px] leading-relaxed max-w-[580px] ${
-              isB ? 'font-headline text-gray-500' : 'text-gray-500'
-            }`}>
-              News pipelines surface volume without verification. Market odds reflect sentiment, not evidence.
-            </p>
-          </div>
-          <div className="grid grid-cols-3 max-md:grid-cols-1">
-            <div className={`p-7 ${isB ? 'bg-gray-50' : 'bg-[#F5F5F3]'}`}>
-              <div className={`${mono} text-[11px] text-gray-400 mb-3.5`}>Without Quotient</div>
-              <div className={`text-[15px] font-semibold text-gray-400 mb-2.5 ${isB ? 'font-headline' : ''}`}>Raw headlines</div>
-              <div className={`text-[13px] text-gray-400 leading-relaxed ${isB ? 'font-headline' : ''}`}>High volume, no accountability or source ranking.</div>
-            </div>
-            <div className={`p-7 ${isB ? 'bg-gray-100' : 'bg-[#F0F0EE]'}`}>
-              <div className={`${mono} text-[11px] text-gray-400 mb-3.5`}>Without Quotient</div>
-              <div className={`text-[15px] font-semibold text-gray-400 mb-2.5 ${isB ? 'font-headline' : ''}`}>Raw market odds</div>
-              <div className={`text-[13px] text-gray-400 leading-relaxed ${isB ? 'font-headline' : ''}`}>Crowd sentiment, easily manipulated, no evidence.</div>
-            </div>
-            <div className={`p-7 ${isB ? 'bg-tb-dark' : 'bg-brand-black'}`}>
-              <div className={`${mono} text-[11px] mb-3.5 ${isB ? 'text-tb-primary' : 'text-brand-blue'}`}>With Quotient</div>
-              <div className={`text-[15px] font-semibold text-white mb-2.5 ${isB ? 'font-headline' : ''}`}>Verified signal</div>
-              <div className={`text-[13px] text-gray-400 leading-relaxed ${isB ? 'font-headline' : ''}`}>Sourced evidence, forecaster attribution, spread vs. odds.</div>
-            </div>
+{
+  "market": "Will Russia-Ukraine ceasefire happen by July 2026?",
+  "q_forecast": 0.48,
+  "market_odds": 0.32,
+  "spread": 0.16,
+  "direction": "YES",
+  "confidence": "high",
+  "top_factors": [
+    "Multiple diplomatic back-channels active",
+    "Zelensky signals conditional negotiation",
+    "Energy infrastructure pressure mounting"
+  ],
+  "sources": 14,
+  "updated_at": "2026-03-15T08:00:00Z"
+}`}</pre>
           </div>
         </div>
       </section>
 
-      {/* Endpoints */}
-      <section className={`border-b ${
-        isB ? 'border-tb-border bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'border-border-thin py-20 px-10 max-md:px-6'
-      }`}>
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span className={`block text-[11px] uppercase mb-4 ${
-            isB ? 'font-mono tracking-[0.08em] text-gray-500' : 'font-mono tracking-eyebrow text-gray-500'
-          }`}>
-            Endpoints
+      {/* Core Endpoints */}
+      <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
+        <div className="max-w-content mx-auto">
+          <span className="block font-mono text-[11px] uppercase tracking-eyebrow text-gray-500 mb-4">
+            CORE ENDPOINTS
           </span>
-          <h2 className={`font-semibold tracking-[-0.02em] mb-2 ${
-            isB
-              ? 'font-headline font-bold text-[clamp(2rem,4vw,3.5rem)] uppercase text-tb-dark leading-[0.9]'
-              : 'text-[28px] text-brand-black'
-          }`}>Core endpoints</h2>
-          <p className={`text-[15px] leading-relaxed max-w-[560px] mb-10 ${
-            isB ? 'font-headline text-gray-500' : 'text-gray-500'
-          }`}>
-            Three endpoints cover most agent use cases. Start with /v1/markets to orient, then pull signal detail per market.
-          </p>
-          <div className={`grid grid-cols-3 max-md:grid-cols-1 gap-px overflow-hidden ${
-            isB ? 'border border-tb-border rounded-tb-card' : 'bg-border-thin border border-border-thin rounded-sm'
-          }`}>
-            {[
-              { method: 'GET', path: '/v1/markets', desc: 'All active markets with current odds, Q forecast, and spread. Filterable by category, spread magnitude, platform, and resolution date.' },
-              { method: 'GET', path: '/v1/signals/:id', desc: "Full intelligence package for a single market. Q's forecast, spread, key factors, sourced signals, forecaster attribution." },
-              { method: 'GET', path: '/v1/intelligence', desc: "Raw context graph. Q's source rankings, forecaster weights, evidence chains. For agents building deeper reasoning pipelines." },
-            ].map((ep, i) => (
-              <div key={ep.path} className={`p-7 ${isB ? 'bg-white' : i % 2 === 0 ? 'bg-white' : 'bg-surface-off'}`}>
-                <div className={`${mono} text-[11px] text-gray-400 mb-2`}>{ep.method}</div>
-                <div className={`${mono} text-[13px] font-medium mb-3 ${isB ? 'text-tb-dark' : 'text-brand-black'}`}>{ep.path}</div>
-                <div className={`text-[13px] leading-relaxed ${isB ? 'font-headline text-gray-500' : 'text-gray-500'}`}>{ep.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Discovery + Payment */}
-      <section className={`border-b ${
-        isB ? 'border-tb-border bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'bg-surface-off border-border-thin py-20 px-10 max-md:px-6'
-      }`}>
-        <div className={`grid grid-cols-2 max-md:grid-cols-1 gap-12 ${isB ? '' : 'max-w-content mx-auto'}`}>
-          <div>
-            <h2 className={`text-[24px] font-semibold tracking-[-0.02em] mb-4 ${
-              isB ? 'font-headline text-tb-dark' : 'text-brand-black'
-            }`}>Auto-discoverable</h2>
-            <p className={`text-[14px] leading-relaxed mb-5 ${
-              isB ? 'font-headline text-gray-500' : 'text-gray-500'
-            }`}>
-              Quotient is registered across major agent skill directories. Your agent can find and use Quotient without manual configuration.
-            </p>
-            <div className="flex flex-col gap-3">
-              {['llms.txt available at quotient.social/llms.txt', 'skill.md for OpenClaw and compatible frameworks', 'Listed on ClawHub and AgentSkills.io', 'MCP server available'].map((item) => (
-                <div key={item} className={`flex gap-3 items-start text-[13px] ${isB ? 'font-headline text-gray-500' : 'text-gray-500'}`}>
-                  <span className={`flex-shrink-0 w-5 h-5 border rounded-sm flex items-center justify-center text-[10px] text-gray-400 mt-0.5 ${
-                    isB ? 'border-tb-border font-mono' : 'border-border-thin font-mono'
-                  }`}>✓</span>
-                  {item}
-                </div>
-              ))}
+          <div className="grid grid-cols-3 max-md:grid-cols-1 gap-px bg-border-thin border border-border-thin rounded-sm overflow-hidden">
+            <div className="bg-white p-6">
+              <div className="font-mono text-[14px] text-brand-black mb-2">/v1/markets</div>
+              <p className="text-[13px] text-gray-500 leading-relaxed">
+                List all covered markets with current odds, Q&apos;s forecast, and spread. Filter by category, platform, or volume threshold.
+              </p>
             </div>
-          </div>
-          <div>
-            <h2 className={`text-[24px] font-semibold tracking-[-0.02em] mb-4 ${
-              isB ? 'font-headline text-tb-dark' : 'text-brand-black'
-            }`}>Flexible payment</h2>
-            <p className={`text-[14px] leading-relaxed mb-5 ${
-              isB ? 'font-headline text-gray-500' : 'text-gray-500'
-            }`}>
-              Pay per call or subscribe. Agent-native payment via x402. Human-friendly via Stripe.
-            </p>
-            <div className="flex flex-col gap-3">
-              {['x402 micropayments for agentic workflows', 'Stripe credit card for developers', 'Volume tiers for high-frequency agent use'].map((item) => (
-                <div key={item} className={`flex gap-3 items-start text-[13px] ${isB ? 'font-headline text-gray-500' : 'text-gray-500'}`}>
-                  <span className={`flex-shrink-0 w-5 h-5 border rounded-sm flex items-center justify-center text-[10px] text-gray-400 mt-0.5 ${
-                    isB ? 'border-tb-border font-mono' : 'border-border-thin font-mono'
-                  }`}>$</span>
-                  {item}
-                </div>
-              ))}
+            <div className="bg-white p-6">
+              <div className="font-mono text-[14px] text-brand-black mb-2">/v1/signals/:id</div>
+              <p className="text-[13px] text-gray-500 leading-relaxed">
+                Full signal package for a specific market. Includes forecast, confidence, key factors, sourced evidence, and track record.
+              </p>
+            </div>
+            <div className="bg-white p-6">
+              <div className="font-mono text-[14px] text-brand-black mb-2">/v1/intelligence</div>
+              <p className="text-[13px] text-gray-500 leading-relaxed">
+                Aggregated intelligence feed. All active signals sorted by spread magnitude. Ideal for scanning opportunities.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Problem Contrast */}
+      <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
+        <div className="max-w-content mx-auto">
+          <span className="block font-mono text-[11px] uppercase tracking-eyebrow text-gray-500 mb-4">
+            WHY QUOTIENT
+          </span>
+          <div className="grid grid-cols-3 max-md:grid-cols-1 gap-4">
+            <div className="border border-border-thin rounded-sm p-6">
+              <span className="block font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 mb-3">
+                WITHOUT QUOTIENT
+              </span>
+              <div className="text-[15px] font-semibold text-gray-400 mb-2">Raw headlines</div>
+              <p className="text-[13px] text-gray-400">
+                Unstructured news. No probability. No track record. No way to assess signal quality.
+              </p>
+            </div>
+            <div className="border border-border-thin rounded-sm p-6">
+              <span className="block font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 mb-3">
+                WITHOUT QUOTIENT
+              </span>
+              <div className="text-[15px] font-semibold text-gray-400 mb-2">Raw market odds</div>
+              <p className="text-[13px] text-gray-400">
+                Thinly traded prices. No analytical context. Easily moved by single large positions.
+              </p>
+            </div>
+            <div className="border border-brand-blue rounded-sm p-6">
+              <span className="block font-mono text-[10px] uppercase tracking-eyebrow text-brand-blue mb-3">
+                WITH QUOTIENT
+              </span>
+              <div className="text-[15px] font-semibold text-brand-black mb-2">Verified signal</div>
+              <p className="text-[13px] text-gray-600">
+                Calibrated probability. Sourced evidence. Public track record. Structured JSON. Machine-readable.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Discovery & Payment */}
+      <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
+        <div className="max-w-content mx-auto">
+          <span className="block font-mono text-[11px] uppercase tracking-eyebrow text-gray-500 mb-4">
+            INTEGRATION
+          </span>
+          <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
+            <div className="border border-border-thin rounded-sm p-6">
+              <div className="text-[15px] font-semibold text-brand-black mb-2">Auto-discoverable</div>
+              <p className="text-[13px] text-gray-500">
+                llms.txt for LLM agents. skill.md for agent frameworks. MCP server for tool-use pipelines. Your agent finds us automatically.
+              </p>
+            </div>
+            <div className="border border-border-thin rounded-sm p-6">
+              <div className="text-[15px] font-semibold text-brand-black mb-2">Flexible payment</div>
+              <p className="text-[13px] text-gray-500">
+                x402 for per-request micropayments. Stripe for monthly subscriptions. Volume tiers for high-throughput agents.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
       <FAQ
-        title="Developer questions"
+        title="Developer FAQ"
         items={[
-          { q: "What's the rate limit?", a: 'Default rate limit is 100 requests/minute. Volume tiers are available for agents making high-frequency calls.' },
-          { q: 'How does x402 payment work?', a: 'x402 is a micropayment protocol for HTTP APIs. Your agent sends a payment header with each request. No API key management required. We support USDC on Base.' },
-          { q: 'How fresh is the data?', a: 'Core signal data updates daily. Breaking news triggers intraday updates on affected markets.' },
-          { q: 'Can I access historical data?', a: 'Yes. The /v1/intelligence endpoint includes historical forecast data and resolved market track records.' },
-          { q: 'Is there a sandbox environment?', a: 'Yes. sandbox.quotient.social mirrors production with a fixed dataset. Free to use. No payment required.' },
+          { q: "What authentication is required?", a: "API key via Bearer token. Keys are available immediately upon registration. No approval process." },
+          { q: "What formats are supported?", a: "JSON by default. All responses include structured fields for forecast, confidence, factors, sources, and metadata." },
+          { q: "Is there rate limiting?", a: "Free tier: 100 requests/day. Paid tiers scale to 100k+ requests/day. Contact us for enterprise volume." },
+          { q: "Can I use this in a trading bot?", a: "Yes. The API is designed for programmatic access. Many users integrate Q's signal into automated trading pipelines." },
+          { q: "How do I get started?", a: "Sign up at docs.quotient.social, get an API key, and make your first request. Full documentation and sample code available." },
         ]}
       />
 

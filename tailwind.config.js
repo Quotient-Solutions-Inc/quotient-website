@@ -24,16 +24,6 @@ module.exports = {
           light: '#F4F4F4',
           off: '#FAFAF8',
         },
-        // Theme B palette
-        tb: {
-          primary:   '#F35B28',
-          cream:     '#F5F0E1',
-          dark:      '#25110F',
-          page:      '#FAFAFA',
-          data:      '#3B98E6',
-          border:    '#D9D9D9',
-          'cta-hover': '#FF6B3D',
-        },
       },
       fontFamily: {
         headline: ['var(--font-newsreader)', 'Georgia', 'serif'],
@@ -41,26 +31,11 @@ module.exports = {
         body: ['var(--font-inter)', 'Helvetica', 'sans-serif'],
         wordmark: ['var(--font-instrument-sans)', 'Helvetica', 'sans-serif'],
       },
-      fontSize: {
-        // Theme B type scale
-        'tb-display-sm': ['40px', { lineHeight: '0.9', letterSpacing: '-0.01em' }],
-        'tb-display-md': ['72px', { lineHeight: '0.9', letterSpacing: '-0.01em' }],
-        'tb-display-lg': ['90px', { lineHeight: '0.9', letterSpacing: '-0.01em' }],
-        'tb-label':      ['13px', { lineHeight: '1.2', letterSpacing: '0.08em' }],
-      },
-      borderRadius: {
-        'tb-card': '10px',
-      },
-      spacing: {
-        'tb-gap':       '8px',
-        'tb-section-y': '64px',
-        'tb-section-x': '48px',
-      },
       letterSpacing: {
         eyebrow: '0.1em',
       },
       maxWidth: {
-        content: '1020px',
+        content: '1080px',
         prose: '800px',
       },
     },

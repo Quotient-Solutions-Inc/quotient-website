@@ -1,242 +1,164 @@
-'use client'
-
-import NavWithModal from '@/components/NavWithModal'
-import QTabBar from '@/components/QTabBar'
-import QCalledIt from '@/components/QCalledIt'
-import LiveSignal from '@/components/LiveSignal'
-import FAQ from '@/components/FAQ'
+import Nav from '@/components/Nav'
+import QNav from '@/components/QNav'
 import Footer from '@/components/Footer'
-import { useTheme } from '@/lib/ThemeContext'
+import FAQ from '@/components/FAQ'
+import Link from 'next/link'
 
 export default function SignalPage() {
-  const { theme } = useTheme()
-  const isB = theme === 'B'
-  const mono = isB ? 'font-mono' : 'font-mono'
-
   return (
     <div className="min-h-screen">
-      <NavWithModal />
-      <QTabBar />
+      <Nav />
+      <QNav />
 
       {/* Hero */}
-      <section className={`border-b ${
-        isB ? 'border-tb-border bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'border-border-thin py-20 px-10 max-md:px-6'
-      }`}>
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span className={`block text-[11px] uppercase mb-4 ${
-            isB ? 'font-mono tracking-[0.08em] text-gray-400' : 'font-mono tracking-eyebrow text-gray-400'
-          }`}>
-            For individual traders &amp; analysts
+      <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
+        <div className="max-w-content mx-auto">
+          <span className="block font-mono text-[11px] uppercase tracking-eyebrow text-gray-400 mb-4">
+            FOR INDIVIDUAL TRADERS &amp; ANALYSTS
           </span>
-          {isB ? (
-            <h1 className="font-headline font-bold text-[clamp(2.5rem,6vw,5rem)] leading-[0.85] uppercase text-tb-dark tracking-[-0.03em] mb-5">
-              The full picture<br />on every market.
-            </h1>
-          ) : (
-            <h1 className="font-headline text-[42px] max-md:text-[32px] font-normal leading-[1.15] tracking-[-0.02em] text-brand-black mb-5">
-              The full picture<br />on every market.
-            </h1>
-          )}
-          <p className={`text-[15px] leading-relaxed max-w-[560px] mb-4 ${
-            isB ? 'font-headline text-gray-500' : 'text-gray-500'
-          }`}>
-            Most prediction market traders lose money because they lack context.
-            Q gives you the why behind every market, 7-8 times a day.
+          <h1 className="font-headline text-[36px] max-md:text-[28px] font-normal leading-[1.15] tracking-[-0.02em] text-brand-black mb-4">
+            The full picture on every market.
+          </h1>
+          <p className="text-[15px] leading-relaxed text-gray-500 max-w-[560px]">
+            Q&apos;s forecast, the spread against market odds, the key factors driving the call, and the sourced evidence behind it.
           </p>
-          <p className={`text-[15px] leading-relaxed max-w-[560px] mb-8 ${
-            isB ? 'font-headline text-gray-500' : 'text-gray-500'
-          }`}>
-            Signal gives you Q&apos;s forecast, the spread against market odds, the key
-            factors driving the call, and the sourced evidence behind it. Everything
-            you need to form a view.
-          </p>
-
-          {/* Signal preview table */}
-          <div className={`overflow-hidden ${
-            isB ? 'border border-tb-border rounded-tb-card' : 'border border-border-thin rounded-sm'
-          }`}>
-            <div className={`flex items-center justify-between px-5 py-3 border-b ${
-              isB ? 'bg-white border-tb-border' : 'bg-surface-off border-border-thin'
-            }`}>
-              <span className={`text-[11px] uppercase ${
-                isB ? 'font-mono tracking-[0.08em] text-gray-400' : 'font-mono tracking-eyebrow text-gray-400'
-              }`}>
-                Live signal &middot; 3 markets (free preview)
-              </span>
-              <span className={`${mono} text-[11px] text-gray-400`}>
-                Subscribe to unlock all 600+ markets
-              </span>
-            </div>
-            <div className={`grid grid-cols-[1fr_80px_80px_70px_200px] max-md:grid-cols-[1fr_80px_80px] gap-4 border-b px-5 py-2.5 ${
-              isB ? 'bg-white border-tb-border' : 'bg-surface-off border-border-thin'
-            }`}>
-              <span className={`${mono} text-[10px] text-gray-400 uppercase tracking-wide`}>Market</span>
-              <span className={`${mono} text-[10px] text-gray-400 uppercase tracking-wide`}>Market odds</span>
-              <span className={`${mono} text-[10px] text-gray-400 uppercase tracking-wide`}>Q says</span>
-              <span className={`${mono} text-[10px] text-gray-400 uppercase tracking-wide max-md:hidden`}>Spread</span>
-              <span className={`${mono} text-[10px] text-gray-400 uppercase tracking-wide max-md:hidden`}>Top signal</span>
-            </div>
-            <div className={`grid grid-cols-[1fr_80px_80px_70px_200px] max-md:grid-cols-[1fr_80px_80px] gap-4 items-center bg-white px-5 py-4 border-b ${
-              isB ? 'border-tb-border' : 'border-border-thin'
-            }`}>
-              <div className={`text-[13px] font-medium leading-snug ${isB ? 'font-headline text-tb-dark' : 'text-brand-black'}`}>Will Russia capture Kostyantynivka by June 30?</div>
-              <div className={`${mono} text-xs text-gray-400`}>72% YES</div>
-              <div className={`${mono} text-[13px] font-medium ${isB ? 'text-tb-primary' : 'text-brand-blue'}`}>NO &middot; 15%</div>
-              <div className="max-md:hidden"><span className={`${mono} text-xs font-medium px-2 py-0.5 rounded-sm bg-orange-50 text-orange-600`}>56 pts</span></div>
-              <div className={`text-xs italic leading-snug max-md:hidden ${isB ? 'font-headline text-gray-500' : 'text-gray-400'}`}>Frontline Situation as of March 4, 2026</div>
-            </div>
-            <div className={`grid grid-cols-[1fr_80px_80px_70px_200px] max-md:grid-cols-[1fr_80px_80px] gap-4 items-center bg-white px-5 py-4 border-b ${
-              isB ? 'border-tb-border' : 'border-border-thin'
-            }`}>
-              <div className={`text-[13px] font-medium leading-snug ${isB ? 'font-headline text-tb-dark' : 'text-brand-black'}`}>US x Cuba military clash in 2026?</div>
-              <div className={`${mono} text-xs text-gray-400`}>54% NO</div>
-              <div className={`${mono} text-[13px] font-medium ${isB ? 'text-tb-primary' : 'text-brand-blue'}`}>NO &middot; 4%</div>
-              <div className="max-md:hidden"><span className={`${mono} text-xs font-medium px-2 py-0.5 rounded-sm ${isB ? 'bg-red-50 text-tb-primary' : 'bg-blue-50 text-brand-blue'}`}>50 pts</span></div>
-              <div className={`text-xs italic leading-snug max-md:hidden ${isB ? 'font-headline text-gray-500' : 'text-gray-400'}`}>The Coming Showdown Over Cuba</div>
-            </div>
-            {/* Blurred/gated row */}
-            <div className="grid grid-cols-[1fr_80px_80px_70px_200px] max-md:grid-cols-[1fr_80px_80px] gap-4 items-center bg-white px-5 py-4 opacity-40 blur-[3px] select-none">
-              <div className="text-[13px] font-medium text-brand-black">████████████████████████</div>
-              <div className="font-mono text-xs text-gray-400">██%</div>
-              <div className="font-mono text-[13px] text-brand-blue">██</div>
-              <div className="max-md:hidden"><span className="font-mono text-xs px-2 py-0.5 rounded-sm bg-orange-50 text-orange-600">██</span></div>
-              <div className="text-xs text-gray-400 max-md:hidden">██████████████</div>
-            </div>
-            <div className={`flex items-center justify-between px-5 py-3.5 border-t ${
-              isB ? 'bg-white border-tb-border' : 'bg-surface-off border-border-thin'
-            }`}>
-              <span className={`${mono} text-[11px] text-gray-400`}>597 more markets gated</span>
-              <button className={`text-[11px] uppercase px-4 py-2 transition-colors ${
-                isB
-                  ? 'bg-tb-dark text-white font-mono tracking-[0.08em] hover:bg-tb-cta-hover'
-                  : 'bg-brand-black text-white font-mono tracking-wide hover:bg-gray-800'
-              }`}>
-                Subscribe to unlock
-              </button>
-            </div>
-          </div>
         </div>
       </section>
 
-      <QCalledIt />
-
-      {/* What's included */}
-      <section className={`border-b ${
-        isB ? 'border-tb-border bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'bg-surface-off border-border-thin py-20 px-10 max-md:px-6'
-      }`}>
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span className={`block text-[11px] uppercase mb-4 ${
-            isB ? 'font-mono tracking-[0.08em] text-gray-500' : 'font-mono tracking-eyebrow text-gray-500'
-          }`}>
-            The signal
+      {/* Signal Preview */}
+      <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
+        <div className="max-w-content mx-auto">
+          <span className="block font-mono text-[11px] uppercase tracking-eyebrow text-gray-400 mb-6">
+            SIGNAL PREVIEW
           </span>
-          <h2 className={`font-semibold tracking-[-0.02em] mb-2 ${
-            isB
-              ? 'font-headline font-bold text-[clamp(2rem,4vw,3.5rem)] uppercase text-tb-dark leading-[0.9]'
-              : 'text-[28px] text-brand-black'
-          }`}>
-            What every market includes
-          </h2>
-          <p className={`text-[15px] leading-relaxed max-w-[560px] mb-10 ${
-            isB ? 'font-headline text-gray-500' : 'text-gray-500'
-          }`}>
-            Full intelligence on every market. Forecast, spread, evidence, and source ranking.
-          </p>
-          <div className={`grid grid-cols-3 max-md:grid-cols-1 gap-px overflow-hidden ${
-            isB ? 'border border-tb-border rounded-tb-card' : 'bg-border-thin border border-border-thin rounded-sm'
-          }`}>
-            {[
-              { n: '01', title: "Q's forecast", body: "Q's probability estimate with directional call (Yes/No), updated daily as new evidence comes in." },
-              { n: '02', title: 'Spread vs. market', body: "The gap between Q's estimate and current market odds. Wide spread = potential edge. Aligned = opportunity priced in." },
-              { n: '03', title: 'Key factors + sourced signals', body: "The specific evidence and reasoning behind Q's call. Every claim is sourced. You can check the work." },
-            ].map((s, i) => (
-              <div key={s.n} className={`p-7 ${isB ? 'bg-white' : i % 2 === 1 ? 'bg-surface-off' : 'bg-white'}`}>
-                <div className={`text-[11px] mb-3.5 ${isB ? 'font-mono text-gray-400' : 'font-mono text-gray-300'}`}>{s.n}</div>
-                <div className={`text-[15px] font-semibold mb-2.5 ${isB ? 'font-headline text-tb-dark' : 'text-brand-black'}`}>{s.title}</div>
-                <div className={`text-[13px] leading-relaxed ${isB ? 'font-headline text-gray-500' : 'text-gray-500'}`}>{s.body}</div>
+
+          {/* Desktop table */}
+          <div className="hidden md:block border border-border-thin rounded-sm overflow-hidden">
+            <table className="w-full text-[13px]">
+              <thead>
+                <tr className="border-b border-border-thin bg-surface-off">
+                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Market</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Market odds</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Q says</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Spread</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Top signal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border-thin">
+                  <td className="px-5 py-4 text-[13px] font-medium text-brand-black leading-snug">Will Russia-Ukraine ceasefire happen by July 2026?</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">32%</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">48%</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-brand-blue font-semibold">+16 pts</td>
+                  <td className="px-5 py-4 text-[13px] text-gray-500 leading-snug">Multiple diplomatic back-channels active per Reuters, FT sources</td>
+                </tr>
+                <tr className="border-b border-border-thin">
+                  <td className="px-5 py-4 text-[13px] font-medium text-brand-black leading-snug">Will China impose new tariffs on US goods before June 2026?</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">45%</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">62%</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-brand-blue font-semibold">+17 pts</td>
+                  <td className="px-5 py-4 text-[13px] text-gray-500 leading-snug">Trade rhetoric escalating; USTR briefing signals retaliation</td>
+                </tr>
+                {/* Blurred row */}
+                <tr className="relative">
+                  <td className="px-5 py-4 text-[13px] text-gray-400">Will the ECB cut rates before September 2026?</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-gray-400">58%</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-gray-400">41%</td>
+                  <td className="px-5 py-4 font-mono text-[13px] text-gray-400">-17 pts</td>
+                  <td className="px-5 py-4 text-[13px] text-gray-400">Hawkish ECB minutes; inflation sticky above target</td>
+                  <td className="absolute inset-0 z-10 backdrop-blur-sm bg-white/60" />
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile cards */}
+          <div className="md:hidden flex flex-col gap-3">
+            {/* Card 1 */}
+            <div className="border border-border-thin rounded-sm p-4">
+              <div className="text-[13px] font-medium text-brand-black mb-2">Will Russia-Ukraine ceasefire happen by July 2026?</div>
+              <div className="flex gap-4 mb-2">
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Market odds</span><span className="font-mono text-[13px] text-gray-500">32%</span></div>
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Q says</span><span className="font-mono text-[13px] text-gray-500">48%</span></div>
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Spread</span><span className="font-mono text-[13px] text-brand-blue font-semibold">+16 pts</span></div>
               </div>
-            ))}
+              <div className="text-[13px] text-gray-500 leading-snug">Multiple diplomatic back-channels active per Reuters, FT sources</div>
+            </div>
+            {/* Card 2 */}
+            <div className="border border-border-thin rounded-sm p-4">
+              <div className="text-[13px] font-medium text-brand-black mb-2">Will China impose new tariffs on US goods before June 2026?</div>
+              <div className="flex gap-4 mb-2">
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Market odds</span><span className="font-mono text-[13px] text-gray-500">45%</span></div>
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Q says</span><span className="font-mono text-[13px] text-gray-500">62%</span></div>
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Spread</span><span className="font-mono text-[13px] text-brand-blue font-semibold">+17 pts</span></div>
+              </div>
+              <div className="text-[13px] text-gray-500 leading-snug">Trade rhetoric escalating; USTR briefing signals retaliation</div>
+            </div>
+            {/* Card 3 - blurred */}
+            <div className="border border-border-thin rounded-sm p-4 relative">
+              <div className="text-[13px] font-medium text-gray-400 mb-2">Will the ECB cut rates before September 2026?</div>
+              <div className="flex gap-4 mb-2">
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Market odds</span><span className="font-mono text-[13px] text-gray-400">58%</span></div>
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Q says</span><span className="font-mono text-[13px] text-gray-400">41%</span></div>
+                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Spread</span><span className="font-mono text-[13px] text-gray-400">-17 pts</span></div>
+              </div>
+              <div className="text-[13px] text-gray-400">Hawkish ECB minutes; inflation sticky above target</div>
+              <div className="absolute inset-0 z-10 backdrop-blur-sm bg-white/60" />
+            </div>
+          </div>
+
+          {/* Below table */}
+          <div className="flex items-center justify-between mt-4">
+            <span className="text-[13px] text-gray-400">597 more markets available</span>
+            <Link href="#" className="text-sm text-brand-blue hover:underline">
+              Subscribe to unlock &rarr;
+            </Link>
           </div>
         </div>
       </section>
 
-      <LiveSignal />
-
-      {/* Pricing */}
-      <section id="pricing" className={`border-b ${
-        isB ? 'border-tb-border bg-tb-cream rounded-tb-card px-8 lg:px-tb-section-x py-tb-section-y' : 'border-border-thin py-20 px-10 max-md:px-6'
-      }`}>
-        <div className={isB ? '' : 'max-w-content mx-auto'}>
-          <span className={`block text-[11px] uppercase mb-4 ${
-            isB ? 'font-mono tracking-[0.08em] text-gray-500' : 'font-mono tracking-eyebrow text-gray-500'
-          }`}>
-            Pricing
+      {/* What Signal Includes */}
+      <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
+        <div className="max-w-content mx-auto">
+          <span className="block font-mono text-[11px] uppercase tracking-eyebrow text-gray-400 mb-6">
+            WHAT&apos;S INCLUDED
           </span>
-          <h2 className={`font-semibold tracking-[-0.02em] mb-10 ${
-            isB
-              ? 'font-headline font-bold text-[clamp(2rem,4vw,3.5rem)] uppercase text-tb-dark leading-[0.9]'
-              : 'text-[28px] text-brand-black'
-          }`}>
-            Simple pricing
-          </h2>
-          <div className="grid grid-cols-3 max-md:grid-cols-1 gap-4">
-            <PricingCol tier="Free" price="$0" freq="forever" features={['2 live markets', 'Weekly Substack digest', 'Mobile app access', 'Forecaster leaderboard']} cta="Get started free" isB={isB} />
-            <PricingCol tier="Signal" price="$[X]" freq="/month" features={['All 600+ markets', 'Key factors per market', 'Sourced evidence chain', 'Historical track record', 'Q Called It archive', 'Spread change alerts']} cta="Subscribe" featured isB={isB} />
-            <PricingCol tier="Signal + Equities" price="$[Y]" freq="/month" features={['Everything in Signal', 'Commodity impact mapping', 'Global equity signals', 'Portfolio alerts']} cta="Subscribe" isB={isB} />
+          <div className="grid grid-cols-3 max-md:grid-cols-1 gap-px bg-border-thin border border-border-thin rounded-sm overflow-hidden">
+            <div className="bg-white p-6">
+              <div className="text-[15px] font-semibold text-brand-black mb-2">Q&apos;s forecast</div>
+              <div className="text-[13px] leading-relaxed text-gray-500">
+                A calibrated probability on every market, updated daily. Built from structured decomposition and 1,600+ ranked sources.
+              </div>
+            </div>
+            <div className="bg-white p-6">
+              <div className="text-[15px] font-semibold text-brand-black mb-2">Spread vs. market</div>
+              <div className="text-[13px] leading-relaxed text-gray-500">
+                The gap between Q&apos;s call and current market odds. This is where the actionable intelligence lives.
+              </div>
+            </div>
+            <div className="bg-white p-6">
+              <div className="text-[15px] font-semibold text-brand-black mb-2">Key factors + sourced signals</div>
+              <div className="text-[13px] leading-relaxed text-gray-500">
+                The evidence chain behind every forecast. Named sources, weighted factors, and auditable reasoning.
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* FAQ */}
       <FAQ
-        title="Common questions"
+        title="Frequently asked questions"
         items={[
-          { q: 'What markets does Signal cover?', a: 'Signal covers 600+ geopolitical prediction markets — elections, policy, and macroeconomic triggers. We prioritize markets on Polymarket and Kalshi where thinly traded conditions create the most mispricing opportunity.' },
-          { q: "How is Q's forecast different from the market odds?", a: "Market odds reflect crowd consensus, which is often driven by sentiment, recency bias, and low liquidity. Q's forecast is built from a structured evidence pipeline calibrated by human forecasters with verified track records. The gap between the two is the signal." },
-          { q: 'How often is the signal updated?', a: "Signal updates daily. Markets with breaking developments may update intraday. You'll receive email alerts if a spread changes materially on a market you're watching." },
-          { q: "What's included in the free tier?", a: 'The free tier includes 2 live markets in the Signal dashboard, weekly Substack digest, mobile app access (Farcaster and World mini apps), and access to the forecaster leaderboard. No credit card required.' },
-          { q: 'Is this financial advice?', a: 'Quotient provides market intelligence, not financial advice. Signal is a research tool. All trading decisions are your own.' },
+          { q: 'What markets does Q cover?', a: 'Q covers 600+ geopolitical prediction markets across platforms including Polymarket, Kalshi, and Metaculus. Coverage includes armed conflicts, trade policy, elections, diplomatic agreements, and sanctions.' },
+          { q: "How does Q's forecast differ from market odds?", a: "Market odds reflect trading activity, which can be thin, manipulated, or driven by sentiment. Q's forecast is built from structured decomposition, calibrated probabilities, and 1,600+ ranked sources — producing an independent analytical signal." },
+          { q: 'How often is the signal updated?', a: "Q updates its forecasts daily. Major geopolitical events may trigger intra-day updates." },
+          { q: 'Is there a free tier?', a: "The signal preview shows a sample of Q's output. Full access to all 600+ markets, historical track records, and sourced reasoning requires a subscription." },
+          { q: 'Is this financial advice?', a: 'No. Quotient provides analytical signal for informational purposes. It is not financial advice, and should not be treated as such. Always do your own research before making trading decisions.' },
         ]}
       />
 
       <Footer />
-    </div>
-  )
-}
-
-function PricingCol({
-  tier, price, freq, features, cta, featured = false, isB = false,
-}: {
-  tier: string; price: string; freq: string; features: string[]; cta: string; featured?: boolean; isB?: boolean
-}) {
-  const mono = isB ? 'font-mono' : 'font-mono'
-  return (
-    <div className={`p-7 flex flex-col ${
-      featured
-        ? isB ? 'bg-tb-dark rounded-tb-card' : 'bg-brand-black rounded-sm'
-        : isB ? 'border border-tb-border rounded-tb-card bg-white' : 'border border-border-thin rounded-sm bg-white'
-    }`}>
-      <div className={`${mono} text-[10px] uppercase ${isB ? 'tracking-[0.08em]' : 'tracking-eyebrow'} mb-2 ${featured ? 'text-gray-600' : 'text-gray-400'}`}>{tier}</div>
-      <div className={`text-[32px] font-semibold tracking-[-0.02em] leading-none mb-1 ${featured ? 'text-gray-200' : isB ? 'text-tb-dark' : 'text-brand-black'}`}>{price}</div>
-      <div className={`${mono} text-[11px] mb-5 ${featured ? 'text-gray-600' : 'text-gray-400'}`}>{freq}</div>
-      <div className={`h-px mb-5 ${featured ? 'bg-gray-800' : isB ? 'bg-tb-border' : 'bg-border-thin'}`} />
-      <div className="flex flex-col gap-2 mb-6">
-        {features.map((f) => (
-          <div key={f} className={`text-[12px] ${isB ? 'font-headline' : ''} ${featured ? 'text-gray-500' : 'text-gray-400'}`}>{f}</div>
-        ))}
-      </div>
-      <div className="mt-auto">
-        <button className={`w-full text-center text-xs ${mono} uppercase px-5 py-2.5 transition-colors ${
-          featured
-            ? isB
-              ? 'tracking-[0.08em] border border-gray-700 text-gray-400 hover:border-tb-primary hover:text-white'
-              : 'tracking-wide rounded-sm border border-gray-700 text-gray-400 hover:border-gray-500 hover:text-gray-200'
-            : isB
-              ? 'tracking-[0.08em] border border-tb-border text-gray-500 hover:border-tb-primary hover:text-tb-dark'
-              : 'tracking-wide rounded-sm border border-border-thin text-gray-500 hover:border-gray-400 hover:text-brand-black'
-        }`}>
-          {cta}
-        </button>
-      </div>
     </div>
   )
 }
