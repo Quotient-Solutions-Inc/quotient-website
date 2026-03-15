@@ -4,6 +4,56 @@ import Footer from '@/components/Footer'
 import FAQ from '@/components/FAQ'
 import Link from 'next/link'
 
+const signals = [
+  {
+    question: 'Will Russia capture Kostyantynivka by June 30?',
+    marketOdds: '72% YES',
+    qSays: 'NO · 15%',
+    spreadPts: 56,
+    spreadLevel: 'hi' as const,
+    topSignal: 'Frontline Situation as of March 4, 2026',
+  },
+  {
+    question: 'US x Cuba military clash in 2026?',
+    marketOdds: '46% YES',
+    qSays: 'NO · 4%',
+    spreadPts: 50,
+    spreadLevel: 'hi' as const,
+    topSignal: 'The Coming Showdown Over Cuba · Foreign Affairs',
+  },
+  {
+    question: 'US x Iran ceasefire by April 30?',
+    marketOdds: '41% YES',
+    qSays: 'NO · 20%',
+    spreadPts: 38,
+    spreadLevel: 'med' as const,
+    topSignal: 'Trump demands immediate pardon for Netanyahu',
+  },
+  {
+    question: 'Will US or Israel strike Iran by December 31, 2026?',
+    marketOdds: '75% YES',
+    qSays: 'YES · 91%',
+    spreadPts: 16,
+    spreadLevel: 'med' as const,
+    topSignal: 'IRGC naval activity in Strait of Hormuz · Reuters',
+  },
+  {
+    question: 'US strikes Iran by December 31, 2026?',
+    marketOdds: '74% YES',
+    qSays: 'YES · 88%',
+    spreadPts: 14,
+    spreadLevel: 'lo' as const,
+    topSignal: 'Pentagon briefing on CENTCOM posture · DoD',
+    blurred: true,
+  },
+]
+
+function spreadColor(level: 'hi' | 'med' | 'lo') {
+  if (level === 'hi') return 'bg-orange-100 text-brand-red-orange'
+  if (level === 'med') return 'bg-blue-50 text-brand-blue'
+  return 'bg-gray-100 text-gray-500'
+}
+
 export default function SignalPage() {
   return (
     <div className="min-h-screen">
@@ -36,75 +86,58 @@ export default function SignalPage() {
           <div className="hidden md:block border border-border-thin rounded-sm overflow-hidden">
             <table className="w-full text-[13px]">
               <thead>
-                <tr className="border-b border-border-thin bg-surface-off">
-                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Market</th>
-                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Market odds</th>
-                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Q says</th>
-                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Spread</th>
-                  <th className="text-left font-mono text-[10px] uppercase tracking-wide text-gray-400 px-5 py-3">Top signal</th>
+                <tr className="border-b border-border-heavy bg-surface-off">
+                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5">Market</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[100px]">Market odds</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[100px]">Q says</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[90px]">Spread</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5">Top signal</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-border-thin">
-                  <td className="px-5 py-4 text-[13px] font-medium text-brand-black leading-snug">Will Russia-Ukraine ceasefire happen by July 2026?</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">32%</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">48%</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-brand-blue font-semibold">+16 pts</td>
-                  <td className="px-5 py-4 text-[13px] text-gray-500 leading-snug">Multiple diplomatic back-channels active per Reuters, FT sources</td>
-                </tr>
-                <tr className="border-b border-border-thin">
-                  <td className="px-5 py-4 text-[13px] font-medium text-brand-black leading-snug">Will China impose new tariffs on US goods before June 2026?</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">45%</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-gray-500">62%</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-brand-blue font-semibold">+17 pts</td>
-                  <td className="px-5 py-4 text-[13px] text-gray-500 leading-snug">Trade rhetoric escalating; USTR briefing signals retaliation</td>
-                </tr>
-                {/* Blurred row */}
-                <tr className="relative">
-                  <td className="px-5 py-4 text-[13px] text-gray-400">Will the ECB cut rates before September 2026?</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-gray-400">58%</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-gray-400">41%</td>
-                  <td className="px-5 py-4 font-mono text-[13px] text-gray-400">-17 pts</td>
-                  <td className="px-5 py-4 text-[13px] text-gray-400">Hawkish ECB minutes; inflation sticky above target</td>
-                  <td className="absolute inset-0 z-10 backdrop-blur-sm bg-white/60" />
-                </tr>
+                {signals.map((s, i) => (
+                  <tr key={i} className={`border-b border-border-thin ${s.blurred ? 'relative' : 'hover:bg-surface-off transition-colors'}`}>
+                    <td className="px-5 py-4 text-[13px] font-medium text-brand-black leading-snug">{s.question}</td>
+                    <td className="px-5 py-4 font-mono text-[13px] text-gray-500">{s.marketOdds}</td>
+                    <td className="px-5 py-4 font-mono text-[13px] text-gray-600 font-semibold">{s.qSays}</td>
+                    <td className="px-5 py-4">
+                      <span className={`font-mono text-[11px] font-semibold px-2 py-0.5 rounded-sm ${spreadColor(s.spreadLevel)}`}>
+                        {s.spreadPts} pts
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-[13px] text-gray-500 leading-snug">{s.topSignal}</td>
+                    {s.blurred && <td className="absolute inset-0 z-10 backdrop-blur-sm bg-white/60" />}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
 
           {/* Mobile cards */}
           <div className="md:hidden flex flex-col gap-3">
-            {/* Card 1 */}
-            <div className="border border-border-thin rounded-sm p-4">
-              <div className="text-[13px] font-medium text-brand-black mb-2">Will Russia-Ukraine ceasefire happen by July 2026?</div>
-              <div className="flex gap-4 mb-2">
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Market odds</span><span className="font-mono text-[13px] text-gray-500">32%</span></div>
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Q says</span><span className="font-mono text-[13px] text-gray-500">48%</span></div>
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Spread</span><span className="font-mono text-[13px] text-brand-blue font-semibold">+16 pts</span></div>
+            {signals.map((s, i) => (
+              <div key={i} className={`border border-border-thin rounded-sm p-4 ${s.blurred ? 'relative' : ''}`}>
+                <div className={`text-[13px] font-medium mb-2 ${s.blurred ? 'text-gray-400' : 'text-brand-black'}`}>{s.question}</div>
+                <div className="flex gap-4 mb-2">
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-gray-400 block">Market odds</span>
+                    <span className={`font-mono text-[13px] ${s.blurred ? 'text-gray-400' : 'text-gray-500'}`}>{s.marketOdds}</span>
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-gray-400 block">Q says</span>
+                    <span className={`font-mono text-[13px] ${s.blurred ? 'text-gray-400' : 'text-gray-600 font-semibold'}`}>{s.qSays}</span>
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-gray-400 block">Spread</span>
+                    <span className={`font-mono text-[11px] font-semibold px-2 py-0.5 rounded-sm ${s.blurred ? 'bg-gray-100 text-gray-400' : spreadColor(s.spreadLevel)}`}>
+                      {s.spreadPts} pts
+                    </span>
+                  </div>
+                </div>
+                <div className={`text-[13px] leading-snug ${s.blurred ? 'text-gray-400' : 'text-gray-500'}`}>{s.topSignal}</div>
+                {s.blurred && <div className="absolute inset-0 z-10 backdrop-blur-sm bg-white/60 rounded-sm" />}
               </div>
-              <div className="text-[13px] text-gray-500 leading-snug">Multiple diplomatic back-channels active per Reuters, FT sources</div>
-            </div>
-            {/* Card 2 */}
-            <div className="border border-border-thin rounded-sm p-4">
-              <div className="text-[13px] font-medium text-brand-black mb-2">Will China impose new tariffs on US goods before June 2026?</div>
-              <div className="flex gap-4 mb-2">
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Market odds</span><span className="font-mono text-[13px] text-gray-500">45%</span></div>
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Q says</span><span className="font-mono text-[13px] text-gray-500">62%</span></div>
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Spread</span><span className="font-mono text-[13px] text-brand-blue font-semibold">+17 pts</span></div>
-              </div>
-              <div className="text-[13px] text-gray-500 leading-snug">Trade rhetoric escalating; USTR briefing signals retaliation</div>
-            </div>
-            {/* Card 3 - blurred */}
-            <div className="border border-border-thin rounded-sm p-4 relative">
-              <div className="text-[13px] font-medium text-gray-400 mb-2">Will the ECB cut rates before September 2026?</div>
-              <div className="flex gap-4 mb-2">
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Market odds</span><span className="font-mono text-[13px] text-gray-400">58%</span></div>
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Q says</span><span className="font-mono text-[13px] text-gray-400">41%</span></div>
-                <div><span className="font-mono text-[10px] uppercase text-gray-400 block">Spread</span><span className="font-mono text-[13px] text-gray-400">-17 pts</span></div>
-              </div>
-              <div className="text-[13px] text-gray-400">Hawkish ECB minutes; inflation sticky above target</div>
-              <div className="absolute inset-0 z-10 backdrop-blur-sm bg-white/60" />
-            </div>
+            ))}
           </div>
 
           {/* Below table */}
