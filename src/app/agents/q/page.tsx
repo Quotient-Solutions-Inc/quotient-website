@@ -3,16 +3,15 @@ import QNav from '@/components/QNav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
-/* Mock data — will be replaced by /api/q/performance */
-const summary = { trades: 12, avgRoi: 8.4 }
+/* Mock data — shaped by /api/q/performance queries */
+const summary = { trades: 12, avgRoi: 6.1 }
 
-const forecasts = [
-  { market: 'Will Russia capture Kostyantynivka by June 30?', direction: 'NO' as const, entry: 0.28, roi24: 5.6, calledAt: 'Mar 4', status: 'Open' as const },
-  { market: 'US x Cuba military clash in 2026?', direction: 'NO' as const, entry: 0.54, roi24: 11.1, calledAt: 'Mar 6', status: 'Open' as const },
-  { market: 'US x Iran ceasefire by April 30?', direction: 'NO' as const, entry: 0.59, roi24: 7.3, calledAt: 'Mar 8', status: 'Open' as const },
-  { market: 'Will US or Israel strike Iran by December 31, 2026?', direction: 'YES' as const, entry: 0.75, roi24: 4.0, calledAt: 'Mar 9', status: 'Open' as const },
-  { market: 'US strikes Iran by December 31, 2026?', direction: 'YES' as const, entry: 0.74, roi24: 5.4, calledAt: 'Mar 9', status: 'Open' as const },
-  { market: 'U.S. strike on Somalia by March 21?', direction: 'YES' as const, entry: 0.62, roi24: 12.9, calledAt: 'Mar 10', status: 'Open' as const },
+const trades = [
+  { question: 'U.S. strike on Somalia by March 21?', direction: 'YES' as const, entryPrice: 0.62, roi: 18.5, calledAt: 'Mar 10' },
+  { question: 'Will US or Israel strike Iran by December 31, 2026?', direction: 'YES' as const, entryPrice: 0.75, roi: 6.7, calledAt: 'Mar 9' },
+  { question: 'US strikes Iran by December 31, 2026?', direction: 'YES' as const, entryPrice: 0.74, roi: 8.1, calledAt: 'Mar 9' },
+  { question: 'US x Iran ceasefire by April 30?', direction: 'NO' as const, entryPrice: 0.59, roi: 4.1, calledAt: 'Mar 8' },
+  { question: 'US x Cuba military clash in 2026?', direction: 'NO' as const, entryPrice: 0.54, roi: 14.8, calledAt: 'Mar 6' },
 ]
 
 export default function QOverviewPage() {
@@ -54,119 +53,66 @@ export default function QOverviewPage() {
         </div>
       </section>
 
-      {/* Performance — 9-day lookback */}
+      {/* Performance + Recent Forecasts */}
       <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
         <div className="max-w-content mx-auto">
-          <span className="font-mono text-[11px] uppercase tracking-eyebrow text-gray-500 block mb-6">
-            SIMULATED PERFORMANCE · 9-DAY LOOKBACK
-          </span>
-
-          <div className="flex items-baseline gap-6 mb-2">
-            <div>
-              <span className="font-headline text-[40px] leading-none text-brand-blue">{summary.avgRoi}%</span>
-              <span className="font-mono text-[11px] uppercase text-gray-400 ml-2">avg ROI</span>
+          <div className="flex items-baseline justify-between mb-8 max-md:flex-col max-md:gap-2">
+            <div className="flex items-baseline gap-8">
+              <div className="flex items-baseline gap-2">
+                <span className="font-mono text-[28px] leading-none text-brand-black">{summary.avgRoi}%</span>
+                <span className="font-mono text-[11px] uppercase text-gray-400">avg roi</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="font-mono text-[28px] leading-none text-brand-black">{summary.trades}</span>
+                <span className="font-mono text-[11px] uppercase text-gray-400">trades</span>
+              </div>
             </div>
-            <div>
-              <span className="font-mono text-[24px] leading-none text-brand-black">{summary.trades}</span>
-              <span className="font-mono text-[11px] uppercase text-gray-400 ml-2">trades</span>
-            </div>
+            <span className="font-mono text-[11px] text-gray-400">
+              9-day lookback · simulated · 20% stop-loss · &gt;$20k vol
+            </span>
           </div>
 
-          <p className="font-mono text-[11px] text-gray-400">
-            Simulated P&amp;L. Entry at Q&apos;s call time. 20% stop-loss. Markets &gt;$20k volume only.
-          </p>
-        </div>
-      </section>
-
-      {/* Recent Forecasts */}
-      <section className="py-12 px-10 max-md:px-6 max-md:py-8 border-b border-border-thin">
-        <div className="max-w-content mx-auto">
-          <span className="font-mono text-[11px] uppercase tracking-eyebrow text-gray-500 block mb-6">
-            RECENT FORECASTS
-          </span>
-
           {/* Desktop table */}
-          <div className="hidden md:block border border-border-thin rounded-sm overflow-hidden">
-            <table className="w-full border-collapse text-[13px]">
+          <div className="hidden md:block border-t border-border-thin">
+            <table className="w-full text-[13px]">
               <thead>
-                <tr className="bg-surface-off border-b border-border-heavy">
-                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5">Market</th>
-                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[80px]">Direction</th>
-                  <th className="text-right font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[70px]">Entry</th>
-                  <th className="text-right font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[80px]">24h ROI</th>
-                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[70px]">Called</th>
-                  <th className="text-right font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal px-5 py-2.5 w-[70px]">Status</th>
+                <tr className="border-b border-border-thin">
+                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal py-2.5 pr-4">Market</th>
+                  <th className="text-left font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal py-2.5 px-4 w-[80px]">Call</th>
+                  <th className="text-right font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal py-2.5 px-4 w-[70px]">Entry</th>
+                  <th className="text-right font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal py-2.5 px-4 w-[70px]">ROI</th>
+                  <th className="text-right font-mono text-[10px] uppercase tracking-eyebrow text-gray-400 font-normal py-2.5 pl-4 w-[70px]">Called</th>
                 </tr>
               </thead>
               <tbody>
-                {forecasts.map((f, i) => (
-                  <tr key={i} className="border-b border-border-thin hover:bg-surface-off transition-colors">
-                    <td className="px-5 py-3 text-[13px] text-brand-black">{f.market}</td>
-                    <td className="px-5 py-3">
-                      <span className={`font-mono text-[11px] uppercase font-semibold px-2 py-0.5 border rounded-sm ${
-                        f.direction === 'YES'
-                          ? 'text-green-700 border-green-300 bg-green-50'
-                          : 'text-brand-red-orange border-orange-200 bg-orange-50'
-                      }`}>
-                        {f.direction}
-                      </span>
+                {trades.map((t, i) => (
+                  <tr key={i} className="border-b border-border-thin">
+                    <td className="py-3 pr-4 text-brand-black">{t.question}</td>
+                    <td className="py-3 px-4 font-mono text-[12px] text-gray-500">{t.direction}</td>
+                    <td className="py-3 px-4 text-right font-mono text-gray-400">{t.entryPrice.toFixed(2)}</td>
+                    <td className={`py-3 px-4 text-right font-mono font-semibold ${t.roi >= 0 ? 'text-green-600' : 'text-brand-red-orange'}`}>
+                      {t.roi >= 0 ? '+' : ''}{t.roi.toFixed(1)}%
                     </td>
-                    <td className="px-5 py-3 text-right font-mono text-gray-500">{f.entry.toFixed(2)}</td>
-                    <td className={`px-5 py-3 text-right font-mono font-semibold ${f.roi24 >= 0 ? 'text-green-600' : 'text-brand-red-orange'}`}>
-                      {f.roi24 >= 0 ? '+' : ''}{f.roi24.toFixed(1)}%
-                    </td>
-                    <td className="px-5 py-3 font-mono text-[12px] text-gray-400">{f.calledAt}</td>
-                    <td className="px-5 py-3 text-right">
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className={`w-[6px] h-[6px] rounded-full ${f.status === 'Open' ? 'bg-green-500' : 'bg-gray-300'}`} />
-                        <span className={`font-mono text-[11px] ${f.status === 'Open' ? 'text-green-600' : 'text-gray-400'}`}>
-                          {f.status}
-                        </span>
-                      </span>
-                    </td>
+                    <td className="py-3 pl-4 text-right font-mono text-[12px] text-gray-400">{t.calledAt}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {/* Mobile cards */}
-          <div className="md:hidden flex flex-col gap-px bg-border-thin border border-border-thin rounded-sm overflow-hidden">
-            {forecasts.map((f, i) => (
-              <div key={i} className="bg-white p-4">
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <p className="text-[13px] text-brand-black leading-snug">{f.market}</p>
-                  <span className={`flex-shrink-0 font-mono text-[11px] uppercase font-semibold px-2 py-0.5 border rounded-sm ${
-                    f.direction === 'YES'
-                      ? 'text-green-700 border-green-300 bg-green-50'
-                      : 'text-brand-red-orange border-orange-200 bg-orange-50'
-                  }`}>
-                    {f.direction}
+          {/* Mobile */}
+          <div className="md:hidden border-t border-border-thin">
+            {trades.map((t, i) => (
+              <div key={i} className="py-3 border-b border-border-thin">
+                <div className="flex items-start justify-between gap-3 mb-1">
+                  <span className="text-[13px] text-brand-black leading-snug">{t.question}</span>
+                  <span className={`font-mono text-[13px] font-semibold flex-shrink-0 ${t.roi >= 0 ? 'text-green-600' : 'text-brand-red-orange'}`}>
+                    {t.roi >= 0 ? '+' : ''}{t.roi.toFixed(1)}%
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-4">
-                    <div>
-                      <span className="font-mono text-[10px] uppercase text-gray-400 block">Entry</span>
-                      <span className="font-mono text-[13px] text-gray-500">{f.entry.toFixed(2)}</span>
-                    </div>
-                    <div>
-                      <span className="font-mono text-[10px] uppercase text-gray-400 block">Called</span>
-                      <span className="font-mono text-[12px] text-gray-400">{f.calledAt}</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className={`font-mono text-[15px] font-semibold block ${f.roi24 >= 0 ? 'text-green-600' : 'text-brand-red-orange'}`}>
-                      {f.roi24 >= 0 ? '+' : ''}{f.roi24.toFixed(1)}%
-                    </span>
-                    <span className="inline-flex items-center gap-1 mt-0.5">
-                      <span className={`w-[5px] h-[5px] rounded-full ${f.status === 'Open' ? 'bg-green-500' : 'bg-gray-300'}`} />
-                      <span className={`font-mono text-[10px] ${f.status === 'Open' ? 'text-green-600' : 'text-gray-400'}`}>
-                        {f.status}
-                      </span>
-                    </span>
-                  </div>
-                </div>
+                <span className="font-mono text-[11px] text-gray-400">
+                  {t.direction} · {t.entryPrice.toFixed(2)} · {t.calledAt}
+                </span>
               </div>
             ))}
           </div>
